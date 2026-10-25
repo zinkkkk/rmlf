@@ -1,0 +1,56 @@
+   CAS   n       tags      alg1      t1  name
+     0   2       poly   8.2e-16     7ms  x1 * x2^2
+     1   2     irr/C0     2.8e0     2ms  ReLU(x1) + x2/10
+     2   2   irr/Cinf   2.3e-11     3ms  exp(sin(x1) + x2^2)
+     3   2  poly/Cinf   9.3e-16     1ms  x1 * x2
+     4   3   irr/Cinf   3.0e-11    83ms  1/3 sum(sin(pi x_i / 2)^2)
+     5   4   irr/Cinf      SKIP    26ms  exp(1/2 (sin(pi(x1^2+x2^2)) + sin(pi(x3^2+x4^2))))
+     6   2   irr/Cinf    8.3e-9     2ms  exp(x1 x2) / ((x1^2-1.44)(x2^2-1.44))
+     7   2   irr/Cinf    5.1e-6     7ms  log2(2.25 - x1^2 - x2^2)
+     8   2   irr/Cinf     2.9e2     3ms  tanh(4(x1 - x2))
+     9   2   irr/Cinf   6.1e-15     2ms  exp(-(x1^2+x2^2)/1000)
+    10   2     irr/C0     2.9e1    25ms  |x1 - x2|^3
+    11   2        rat   1.3e-15     2ms  (x1 + x2^3) / (x1 x2^2 + 2)
+    12   2        rat   6.2e-13     2ms  (x1^2+x2^2+x1-x2-1)/((x1-1.1)(x2-1.1))
+    13   2        rat   7.7e-13     2ms  (x1^4+x2^4+x1^2 x2^2+x1 x2)/((x1-1.1)(x2-1.1))
+    14   4        rat   1.9e-14     2ms  (x1^2+x2^2+x1-x2+1)/((x3-1.5)(x4-1.5))
+    15   2        rat   1.7e-15     2ms  (x1^2+x2^2+x1-x2-1)/(x1^3+x2^3+4)
+    16   2        rat   8.8e-16     1ms  (x1^3+x2^3)/(x1^2+x2^2+3)
+    17   2        rat   2.6e-14     1ms  (x1^4+x2^4+x1^2 x2^2+x1 x2)/(x1^2 x2^2 - 2 x1^2 - 2 x2^2 + 4)
+    18   2        rat   1.8e-15     1ms  (x1^3+x2^3)/(x1^2 x2^2 - 2 x1^2 - 2 x2^2 + 4)
+    19   2        rat   1.3e-15     1ms  (x1^4+x2^4+x1^2 x2^2+x1 x2)/(x1^3+x2^3+4)
+    20   3   irr/Cinf    4.0e-9     3ms  Breit Wigner function
+    21   4   irr/Cinf      SKIP     1ms  sum_i atan(x_i) / (x1^2 x2^2 - x1^2 - x2^2 + 1)
+    22   4   irr/Cinf    4.4e-5   499ms  exp(x1 x2 x3 x4) / (x1^2+x2^2-x3 x4+3)
+    23   4   irr/Cinf      SKIP     4ms  10 prod_i sinc(x_i)
+    24   2   irr/Cinf   5.8e-10     7ms  10 sinc(x1) sinc(x2)
+    25   2       poly   5.3e-16     2ms  x1^2 + x2^2 + x1 x2 - x2 + 1
+    26   3        irr    2.9e-3   7.11s  (x1+x2+x3)/(6+cos(x1)+cos(x2)+cos(x3))
+    27   5   irr/Cinf      SKIP    68ms  sum(x) / (10+sum(cos(x)))
+    28   2   irr/Cinf    8.1e-2     5ms  Toy function
+    29   2     irr/C0     1.7e1     3ms  min(10|x1|,1)sign(x1) + x1 x2^3 / 10
+    30   8   irr/Cinf      FAIL   114ms  Borehole function
+    31   6       poly   1.6e-14    51ms  x1^2 x2^3 + x3 x4 - x5^2 + x6
+    32   2   irr/Cinf   5.5e-11     2ms  atan(x1) + x2^3
+    33   2   irr/Cinf    1.1e-8    21ms  (x1+x2)/(cos(x1)^2+cos(x2)+3)
+    36   3        rat   9.1e-16     2ms  x2/(3+x2 x1/3-x3^2)
+    37   4   irr/Cinf   2.1e-12     7ms  x1 x4^3 + sin(2 x2) x3
+    38   3        rat   2.1e-10    14ms  (x1^9 x2^7 + x1^3 + 5 x3^2) / (5 x1^4 + 4 x1^2 + x3 x2^3 + 1)
+    39   3        rat   8.4e-13     2ms  (x3 + x1^4) / (x1^3 + x2^2 + 1)
+    40   4        rat   9.9e-16     9ms  x3 x1 / (x1^2+x2+x3^2+1) + x4^3
+    41   5        rat   2.9e-14     8ms  (x5^3 x3 x1+x3^2)/(x1^3+x2 x3+x4)
+    42   6        rat   4.4e-13    75ms  (x1 + x3 - sqrt(2) x6^2) / (x1^4 + x2 x3 + x4^3 + x5^2 + x6)
+    43   7        rat   3.6e-13   746ms  (x3 x2^3+1)/(x1^4+x2^2 x3+x4^2+x5+x6^3+x7)
+    44   8        rat   1.4e-11   573ms  1 / (x1^4 + x2^2 x3 + x4^2 + x5 + x6 + x7 + x8)
+    45   9        rat   3.3e-14   584ms  1 / (x1^2+x2^2 x3+x4^2+x5+x6+x7+x8+x9)
+    46  10        rat   5.8e-14   1.63s  1 / (x1 + x1^2 x2 x3 + x4 + x5 + x6 + x7 x8 + x9^2 + x10)
+    47   5       poly   1.1e-14     3ms  Polynomial Ex 3.1
+    48   3       poly   3.7e-16     1ms  x1 x2 + x1 x3 + x2 x3
+    51   2   irr/Cinf      SKIP   2.02s  NLT Challenge #4
+    52   2   irr/Cinf   1.9e-10     2ms  x2 + sin(x1)^2
+    53   2       poly   1.3e-15     2ms  (2-x1)(1-2x2)+x1(5+x2^2)
+    54   2       poly   3.4e-13     2ms  x1^4 x2^2 + x1^2 x2^4 - 3 x1^2 x2^2 + 1
+    55   2        rat      FAIL     2ms  (x1^2+2x2^2)/(x1^2+x2^2)
+    56   2        rat     6.5e0     2ms  x1^2/(x1^2+x2^2)
+    57   2        rat   7.7e-16     1ms  x1 x2^2
+    58   4        rat   7.2e-16     2ms  (x1 x2+x3-x4+10)/(x1+2x2+x3+3x4+20)

@@ -1,0 +1,44 @@
+digraph models_current {
+  rankdir=LR;
+  labelloc="t";
+  label="rmlf model types — CURRENT (the mess)";
+  node [shape=box, style=filled, fontname="Helvetica", fontsize=10];
+  edge [fontname="Helvetica", fontsize=9];
+
+  // entry points
+  alg   [label="alg1 / alg2 / alg3", shape=ellipse, fillcolor="#cfe8ff"];
+  dopt  [label="decouple_opt / decouple_adaptive", shape=ellipse, fillcolor="#cfe8ff"];
+
+  // core models
+  Bary  [label="Barycentric\n{nodes, values, coeffs}\ndense model", fillcolor="#d7f5d7"];
+  Dec   [label="DecoupledModel\n{C_num, C_den}\nKST tensors", fillcolor="#d7f5d7"];
+  Comp  [label="CompressedBarycentric\nTT cores (storage/eval)", fillcolor="#d7f5d7"];
+
+  // 1-D / fibre / channel zoo
+  B1d   [label="BarycentricRational1D\n{nodes,values,weights}", fillcolor="#fff2cc"];
+  Svf   [label="SingleVarFn\n{axis,lead,lambda,values}\n(== B1d, duplicate!)", fillcolor="#ffd9d9"];
+  Lab   [label="LabelledFibre\n(B1d + axis/pin)", fillcolor="#fff2cc"];
+  Chan  [label="ChannelDecomposition\n+ AxisChannels\n(TT-coupling inspector)", fillcolor="#fff2cc"];
+
+  // entry -> models
+  alg  -> Bary;
+  dopt -> Dec;
+
+  // conversions that exist (inherent methods, NOT From/Into)
+  Dec  -> Bary [label="to_barycentric()"];
+  Bary -> Comp [label="from_model(tol)\n*tol looks mandatory*", color="#cc6600"];
+
+  // fibre methods — COPY-PASTED on 3 types
+  Bary -> B1d  [label="fibre() [impl #1]", style=dashed];
+  Dec  -> B1d  [label="fibre() [impl #2]", style=dashed];
+  Comp -> B1d  [label="fibre() [impl #3]", style=dashed];
+  Bary -> Lab  [label="fibre_set() x3", style=dashed];
+  Dec  -> Svf  [label="decoupled_functions()\n→ Vec<Vec<SingleVarFn>>", style=dashed, color="#cc0000"];
+  Comp -> Chan [label="channel_decomposition()\n(only on Comp)", style=dashed];
+
+  // the holes / dead-ends
+  Dec  -> Comp [label="MISSING\n(must round-trip via Bary)", style=dotted, color="#cc0000"];
+  Svf  -> Lab  [label="no link\n(parallel concepts)", style=dotted, color="#cc0000"];
+
+  { rank=same; B1d; Svf; Lab; }
+}

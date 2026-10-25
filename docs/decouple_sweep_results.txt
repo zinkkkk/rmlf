@@ -1,0 +1,62 @@
+   CAS   n       tags   nip                 degree   #KST  samples       err    time  name
+     0   2       poly    20                  [1,2]      3       24   4.1e-16     4ms  x1 * x2^2 EXACT
+     1   2     irr/C0    20                  [9,1]     11       80    1.4e-2     4ms  ReLU(x1) + x2/10
+     2   2   irr/Cinf    20                  [7,8]      9      288    2.2e-3     4ms  exp(sin(x1) + x2^2)
+     3   2  poly/Cinf    20                  [1,1]      3       16   4.3e-16     4ms  x1 * x2 EXACT
+     4   3   irr/Cinf    20                [8,8,8]     91     5832    3.0e-4    12ms  1/3 sum(sin(pi x_i / 2)^2)
+     5   4   irr/Cinf    20              [9,9,9,9]   1111   160000     5.1e1   147ms  exp(1/2 (sin(pi(x1^2+x2^2)) + sin(pi(x3^2+x4^2))))
+     6   2   irr/Cinf    20                  [5,5]      7      144    5.9e-4     4ms  exp(x1 x2) / ((x1^2-1.44)(x2^2-1.44))
+     7   2   irr/Cinf    20                  [8,8]     10      324    6.0e-3     4ms  log2(2.25 - x1^2 - x2^2)
+     8   2   irr/Cinf    37                  [8,8]     10      324     5.5e1    15ms  tanh(4(x1 - x2))
+     9   2   irr/Cinf    20                  [4,4]      6      100    8.7e-8     5ms  exp(-(x1^2+x2^2)/1000)
+    10   2     irr/C0    41                [16,16]     18     1156      FAIL    12ms  |x1 - x2|^3
+    11   2        rat    20                  [1,3]      3       32   2.3e-14     4ms  (x1 + x2^3) / (x1 x2^2 + 2) EXACT
+    12   2        rat    20                  [2,2]      4       36   1.8e-15     3ms  (x1^2+x2^2+x1-x2-1)/((x1-1.1)(x2-1.1)) EXACT
+    13   2        rat    20                  [4,4]      6      100   7.1e-15     4ms  (x1^4+x2^4+x1^2 x2^2+x1 x2)/((x1-1.1)(x2-1.1)) EXACT
+    14   4        rat    10              [2,2,1,1]     31      576   3.0e-16     4ms  (x1^2+x2^2+x1-x2+1)/((x3-1.5)(x4-1.5)) EXACT
+    15   2        rat    20                  [3,3]      5       64   8.4e-15     3ms  (x1^2+x2^2+x1-x2-1)/(x1^3+x2^3+4) EXACT
+    16   2        rat    20                  [3,3]      5       64   2.8e-15     3ms  (x1^3+x2^3)/(x1^2+x2^2+3) EXACT
+    17   2        rat    20                  [4,4]      6      100   5.1e-15     4ms  (x1^4+x2^4+x1^2 x2^2+x1 x2)/(x1^2 x2^2 - 2 x1^2 - 2 x2^2 + 4) EXACT
+    18   2        rat    20                  [3,3]      5       64   6.1e-16     3ms  (x1^3+x2^3)/(x1^2 x2^2 - 2 x1^2 - 2 x2^2 + 4) EXACT
+    19   2        rat    20                  [4,4]      6      100   6.9e-15     4ms  (x1^4+x2^4+x1^2 x2^2+x1 x2)/(x1^3+x2^3+4) EXACT
+    20   3   irr/Cinf    10                [4,4,3]     31      800    8.8e-2     7ms  Breit Wigner function
+    21   4   irr/Cinf    10              [7,7,7,7]    585    65536    1.5e-6    62ms  sum_i atan(x_i) / (x1^2 x2^2 - x1^2 - x2^2 + 1)
+    22   4   irr/Cinf    10              [5,5,4,4]    223    14400      FAIL    20ms  exp(x1 x2 x3 x4) / (x1^2+x2^2-x3 x4+3)
+    23   4   irr/Cinf    11              [7,7,7,7]    585    65536    7.6e-5    61ms  10 prod_i sinc(x_i)
+    24   2   irr/Cinf    21                [10,10]     12      484    2.4e-7     5ms  10 sinc(x1) sinc(x2)
+    25   2       poly    20                  [2,2]      4       36   9.6e-16     4ms  x1^2 + x2^2 + x1 x2 - x2 + 1 EXACT
+    26   3        irr    30             [13,13,13]    211    21952     6.9e0    42ms  (x1+x2+x3)/(6+cos(x1)+cos(x2)+cos(x3))
+    27   5   irr/Cinf    13            [7,7,7,7,7]   4681  1048576     1.6e1   756ms  sum(x) / (10+sum(cos(x)))
+    28   2   irr/Cinf    31                 [6,14]      8      420     1.1e2     8ms  Toy function
+    29   2     irr/C0    20                  [9,3]     11      160     4.0e0     4ms  min(10|x1|,1)sign(x1) + x1 x2^3 / 10
+    30   8   irr/Cinf     4      [4,6,0,1,1,1,1,1]   1126   286720    1.9e-4   1.70s  Borehole function
+    31   6       poly     8          [2,3,1,1,2,1]    232    18432   6.0e-15    44ms  x1^2 x2^3 + x3 x4 - x5^2 + x6 EXACT
+    32   2   irr/Cinf    20                  [9,3]     11      160    1.1e-8     4ms  atan(x1) + x2^3
+    33   2   irr/Cinf    30                [14,13]     16      840    5.3e-2    11ms  (x1+x2)/(cos(x1)^2+cos(x2)+3)
+    36   3        rat    10                [1,1,2]      7       96   2.4e-15     3ms  x2/(3+x2 x1/3-x3^2) EXACT
+    37   4   irr/Cinf    10              [1,6,1,3]     45     1792    6.4e-6     8ms  x1 x4^3 + sin(2 x2) x3
+    38   3        rat    30                [9,7,2]     91     1920     2.5e1     9ms  (x1^9 x2^7 + x1^3 + 5 x3^2) / (5 x1^4 + 4 x1^2 + x3 x2^3 + 1)
+    39   3        rat    20                [4,2,1]     21      240   8.7e-13     6ms  (x3 + x1^4) / (x1^3 + x2^2 + 1) EXACT
+    40   4        rat    20              [2,1,2,3]     28     1152   3.1e-15    12ms  x3 x1 / (x1^2+x2+x3^2+1) + x4^3 EXACT
+    41   5        rat     5            [3,1,2,1,3]     85     6144   2.2e-13    12ms  (x5^3 x3 x1+x3^2)/(x1^3+x2 x3+x4) EXACT
+    42   6        rat     5          [4,1,1,3,2,2]    356    46080   3.5e-13    62ms  (x1 + x3 - sqrt(2) x6^2) / (x1^4 + x2 x3 + x4^3 + x5^2 + x6) EXACT
+    43   7        rat     5        [4,3,1,2,1,3,1]   1386   245760   8.9e-13   333ms  (x3 x2^3+1)/(x1^4+x2^2 x3+x4^2+x5+x6^3+x7) EXACT
+    44   8        rat     5      [4,2,1,2,1,1,1,1]   1401   368640   7.5e-10   797ms  1 / (x1^4 + x2^2 x3 + x4^2 + x5 + x6 + x7 + x8) EXACT
+    45   9        rat     3    [2,2,1,2,1,1,1,1,1]   1705   884736   2.2e-14   5.58s  1 / (x1^2+x2^2 x3+x4^2+x5+x6+x7+x8+x9) EXACT
+    46  10        rat     3  [2,1,1,1,1,1,1,1,2,1]   1918  2359296   1.8e-14  43.39s  1 / (x1 + x1^2 x2 x3 + x4 + x5 + x6 + x7 x8 + x9^2 + x10) EXACT
+    47   5       poly     6            [1,1,1,1,1]     31     1024   7.2e-16     4ms  Polynomial Ex 3.1 EXACT
+    48   3       poly     6                [1,1,1]      7       64   3.7e-16     2ms  x1 x2 + x1 x3 + x2 x3 EXACT
+    51   2   irr/Cinf  1000               [76,133]     78    41272     1.6e2  10.57s  NLT Challenge #4
+    52   2   irr/Cinf    20                  [9,1]     11       80    3.0e-8     4ms  x2 + sin(x1)^2
+    53   2       poly    10                  [1,2]      3       24   6.1e-15     3ms  (2-x1)(1-2x2)+x1(5+x2^2) EXACT
+    54   2       poly    20                  [4,4]      6      100   4.8e-13     4ms  x1^4 x2^2 + x1^2 x2^4 - 3 x1^2 x2^2 + 1 EXACT
+    55   2        rat    20                  [2,2]      4       36   2.7e-12     4ms  (x1^2+2x2^2)/(x1^2+x2^2) EXACT
+    56   2        rat    20                  [2,2]      4       36   7.9e-14     4ms  x1^2/(x1^2+x2^2) EXACT
+    57   2        rat    10                  [1,2]      3       24   3.7e-16     2ms  x1 x2^2 EXACT
+    58   4        rat     2              [1,1,1,1]     15      256   8.6e-16     4ms  (x1 x2+x3-x4+10)/(x1+2x2+x3+3x4+20) EXACT
+
+Summary (default catalog nip; skipped 0 BIG-grid cases):
+  rational/poly: 30/31 EXACT (perfect reconstruction)
+  irrational:    0/24 EXACT, 22 approximate
+Note: rational 'failures' at the catalog default nip are usually nip-too-low (degree under-detected),
+  not method failures — e.g. CAS 41/58 recover EXACTly at nip>=10 (re-run a single case with a larger nip).

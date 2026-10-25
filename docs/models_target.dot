@@ -1,0 +1,61 @@
+digraph models {
+  rankdir=TB;
+  bgcolor="white";
+  labelloc="t";
+  fontname="Helvetica";
+  fontsize=17;
+  fontcolor="#222222";
+  label="rmlf — models & how they connect";
+  nodesep=0.5;
+  ranksep=0.6;
+
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11,
+        margin="0.20,0.12", penwidth=0, fontcolor="#1a1a1a"];
+  edge [fontname="Helvetica", fontsize=9, color="#9aa0a6", fontcolor="#5f6368",
+        arrowsize=0.7, penwidth=1.0];
+
+  // ── row 0: entry points ──
+  { rank=same;
+    alg  [label="alg1 · alg2 · alg3", shape=oval, fillcolor="#aecbfa"];
+    dopt [label="decouple_opt · decouple_adaptive", shape=oval, fillcolor="#aecbfa"];
+  }
+
+  // ── row 1: the two models produced directly ──
+  { rank=same;
+    Bary [label=<<b>Barycentric</b><br/><font point-size="9">dense · the hub</font>>, fillcolor="#a8dab5"];
+    Dec  [label=<<b>DecoupledModel</b><br/><font point-size="9">KST structure · C_num / C_den</font>>, fillcolor="#a8dab5"];
+  }
+
+  // ── row 2: derived / storage forms (Compressed left, 1-D slice right) ──
+  { rank=same;
+    Comp [label=<<b>CompressedBarycentric</b><br/><font point-size="9">tensor-train · eval linear in n</font>>, fillcolor="#a8dab5"];
+    B1d  [label=<<b>BarycentricRational1D</b><br/><font point-size="9">model slice (1-D)</font>>, fillcolor="#fde293"];
+    Dfn  [label=<<b>DecoupledFn</b><br/><font point-size="9">KST factor Φₗ · not a slice</font>>, fillcolor="#fbc99d"];
+  }
+
+  // ── row 3: leaves ──
+  { rank=same;
+    Chan [label=<<b>ChannelDecomposition</b><br/><font point-size="9">coupling inspector (analysis)</font>>, fillcolor="#d7c5ee"];
+    Lab  [label=<<b>LabelledFibre</b><br/><font point-size="9">slice + axis/pin label</font>>, fillcolor="#fde293"];
+  }
+
+  // entry -> model
+  alg  -> Bary [color="#4285f4", penwidth=1.6];
+  dopt -> Dec  [color="#4285f4", penwidth=1.6];
+
+  // conversions — every pair connected, all exact. Idiomatic named methods
+  // (to_barycentric / to_compressed / to_decoupled) on every model, plus From/Into.
+  Dec  -> Bary [label="to_barycentric()", dir=both];
+  Bary -> Comp [label="to_compressed()", dir=both];
+  Dec  -> Comp [label="to_compressed() / to_decoupled()", dir=both, constraint=false, color="#9aa0a6"];
+
+  // 1-D views (Fibres trait — on every model)
+  Bary -> B1d  [label="fibre(axis,pin)", color="#c5912b", fontcolor="#9a6f1f"];
+  B1d  -> Lab  [label="fibre_set()", color="#c5912b", fontcolor="#9a6f1f"];
+
+  // KST factors (distinct from slices)
+  Dec  -> Dfn  [label="decoupled_functions()", color="#d97c2b", fontcolor="#a85e1f"];
+
+  // analysis — reachable from ANY model (.channels()), shown off the TT form
+  Comp -> Chan [label="channels()", color="#7e57c2", fontcolor="#5e35b1"];
+}

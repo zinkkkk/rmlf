@@ -1,0 +1,19 @@
+   CAS   n       tags      alg1      t1      alg2      t2      alg3      t3  name
+    11  11        rat   1.8e-14    14ms    1.5e-2    24ms      SKIP       -  Legacy complex rational, n=11 [all-axis + 2D sections]
+    12  12        rat   7.1e-13    13ms    2.1e-1    21ms      SKIP       -  Legacy complex rational, n=12 [all-axis + 2D sections]
+    13  13        rat   1.9e-11    14ms    3.4e-3    25ms      SKIP       -  Legacy complex rational, n=13 [all-axis + 2D sections]
+    14  14        rat   1.2e-12    16ms    3.0e-3    27ms      SKIP       -  Legacy complex rational, n=14 [all-axis + 2D sections]
+    15  15        rat   5.9e-12    17ms    2.6e-3    31ms      SKIP       -  Legacy complex rational, n=15 [all-axis + 2D sections]
+    16  16        rat   1.0e-13    17ms    4.5e-2    29ms      SKIP       -  Legacy complex rational, n=16 [all-axis + 2D sections]
+    17  17        rat   8.8e-13    19ms    3.1e-1    31ms      SKIP       -  Legacy complex rational, n=17 [all-axis + 2D sections]
+    18  18        rat   9.8e-13    20ms    3.0e-1    32ms      SKIP       -  Legacy complex rational, n=18 [all-axis + 2D sections]
+    19  19        rat   9.7e-13    21ms    7.5e-1    33ms      SKIP       -  Legacy complex rational, n=19 [all-axis + 2D sections]
+    20  20        rat   8.0e-10    21ms    2.4e-3    35ms      SKIP       -  Legacy complex rational, n=20 [all-axis + 2D sections]
+    30  30        rat   4.3e-14    31ms   1.1e-13    46ms      SKIP       -  Legacy complex rational, n=30 [all-axis + 2D sections]
+    59   2   irr/Cinf    7.5e-7     8ms    6.0e-2     6ms      SKIP       -  Marx sqrt/sinh on a mixed complex/real domain [full original domain]
+
+Complex catalog: errors are max|f-g| / max|f| over 4000 deterministic interior queries per fit.
+Legacy cases: n is the original function dimension; errors are maxima and timings are totals across all 1D axis sections plus the first-two-axis 2D section, not full nD fits.
+Section segments: 0.4+0.1i to 1.8+0.3i; other variables fixed at 1.05+0.009*j + i*(0.06+0.002*j), j=0..n-1.
+Section alg1 uses declared degrees (forced order); alg2 uses default options. Case 59 uses the full original domain and default fitter options.
+SKIP: alg3 is real-only. Timing includes fitting and off-grid evaluation, as in catalog_sweep.

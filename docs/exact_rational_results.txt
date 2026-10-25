@@ -1,0 +1,30 @@
+=== Exact ℚ sweep: fit_poly / fit_rational, byte-level compression ===
+
+Front door: rational::fit_poly(f, &degrees) / fit_rational(f, &num, &den).
+Compression is in BYTES — the packed form pools repeated BigRationals and
+the canonical rescale clears shared denominators (eval-invariant).
+
+ id  name                                       denseB  sparseB  pooledB  canon%  recover
+  0  Polya-Szego xy+xz+yz                         1024      160      148    0.0%  EXACT
+  1  separable (x+1)(y+2)(z+3)                    1024      160      148    0.0%  EXACT
+  2  coupled x^2 y + x y^2 + 1                    1152      180      162    0.0%  EXACT
+  3  4-var coupled x0x1+x2x3+x0x3                 2048      320      292    0.0%  EXACT
+  4  separable 5-var prod(x_l+l)                  4096      496      436    0.0%  EXACT
+  5  high-degree x0^4 x1 + x0                     1280      186      178    0.0%  EXACT
+  6  separable rational 1/((x0+1)(x1+2))           512       80       76   27.8%  EXACT
+  7  Appendix C (t^2+s-2)/(t^2+2s+1)               768      120      120   32.2%  EXACT
+  8  coupled rational (x0+x1x2)/(1+x0^2+x1^2)     2304      361      361   32.0%  EXACT
+  9  quadratic table x0^2+x0x1+x1^2+7             1152      181      169    0.0%  EXACT
+ 10  LIMIT under-resolved x0^3 x1^3 + x0 x1 …      512       80       72    0.0%  limit
+ 11  LIMIT 1/(x0+x1+1)                             512       80       74   33.3%  EXACT
+ 12  LIMIT (x0^2-x1^2)/(x0-x1) = x0+x1 (non-…      512       80       74    0.0%  EXACT
+
+  denseB  = dense coefficient bytes (2·∏k entries as full BigRationals)
+  sparseB = after dropping exact zeros (the SPARSE footprint: nonzero values + index)
+  pooledB = after also interning repeated values (distinct values once + u32 codes)
+  canon%  = bit saving from the joint primitive-integer rescale (eval-invariant)
+
+  The two byte levers are sparsity (denseB→sparseB) and value pooling
+  (sparseB→pooledB); the canonical rescale then shrinks each value's bits.
+  Cases 0–9 recover EXACTLY; 10 is a deliberate under-resolved limit;
+  11/12 are pole / non-coprime edges that still recover off the singular set.

@@ -1,0 +1,72 @@
+=== Exact finite-field sweep (𝔽_p · GF(2^8) · GF(2)) ===
+
+Front door: field::fit_fp(f, p, &degrees) / fit_gf256(f, &degrees).
+Compression in BYTES: the packed 𝔽_p model hoists the prime ONCE (in the
+model context) and stores bare u64 values — no per-coefficient prime.
+
+── 1a. 𝔽_p maps: degree spectrum & recoverability across primes ──
+
+map                                      p=7      p=13      p=17      p=31      p=97     p=251     p=257
+modular product (a*b mod p) mod 5      [6,6]   [12,12]   [16,16]   [30,30]   [96,96] [250,250] [256,256]
+field product a*b                     [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓
+modular inverse x^-1 (deg p-2)           [5]      [11]      [15]      [29]      [95]     [249]     [255]
+Legendre symbol x^((p-1)/2)              [3]       [6]       [8]      [15]      [48]     [125]     [128]
+cube x^3                                 [3]      [3]✓      [3]✓      [3]✓      [3]✓      [3]✓      [3]✓
+S-box 7*x^3 + 3                         [0]✓      [3]✓      [3]✓      [3]✓      [3]✓      [3]✓      [3]✓
+mix a*b + a + b                       [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓    [1,1]✓
+discrete exp g^x (periodic)              [6]      [12]      [16]      [30]      [96]     [250]     [256]
+
+  [d]✓ = degree d, disjoint grid fits, recovers EXACTLY. [d] (no ✓) =
+  out of reach (needs 2(d+1) > p nodes) — the ⌊p/2⌋−1 ceiling.
+
+── 1b. 𝔽_p in-reach maps: packed compression by lever, BYTES (p = 257) ──
+
+ id  name                            degree    denseB   hoistB  sparseB  pooledB   save
+  1  field product a*b                [1,1]       128       64       96       80    38%
+  4  cube x^3                           [3]       128       64      112      104    19%
+  5  S-box 7*x^3 + 3                    [3]       128       64      128      120     6%
+  6  mix a*b + a + b                  [1,1]       128       64      128      112    12%
+
+  denseB→hoistB = the prime-hoist (each Fp 16 B → bare u64 8 B, prime stored once)
+  hoistB→sparseB = dropping exact zeros (the SPARSE footprint)
+  sparseB→pooledB = interning repeated values. The per-coefficient prime
+  repetition is gone; holds for large Mersenne/Fermat primes too (u64 payload).
+
+── 1c. ℚ polynomial catalog recovered over the field spread ──
+
+ id  name                             recovers exactly over
+  0  Polya-Szego xy+xz+yz             GF(5), GF(7), GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+  1  separable (x+1)(y+2)(z+3)        GF(5), GF(7), GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+  2  coupled x^2 y + x y^2 + 1        GF(7), GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+  3  4-var coupled x0x1+x2x3+x0x3     GF(5), GF(7), GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+  4  separable 5-var prod(x_l+l)      GF(5), GF(7), GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+  5  high-degree x0^4 x1 + x0         GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+  9  quadratic table x0^2+x0x1+x1^2+7 GF(7), GF(13), GF(17), GF(31) Mersenne 2^5-1, GF(97), GF(251) largest 8-bit prime, GF(257) Fermat 2^8+1, GF(65537) Fermat 2^16+1, GF(2^31-1) Mersenne, GF(2^61-1) Mersenne
+
+  Confirms polynomial recovery is field-generic: GF(5) through the
+  2^61−1 Mersenne prime (large-modulus arithmetic end to end).
+
+── 2. GF(2^8): the AES S-box vs its linear layer (fit_gf256) ──
+
+map                           degree  recover      note
+MixColumns xtime ·2                1  EXACT        GF(2)-linear
+x^(2^1)                            2  EXACT        Frobenius (GF(2)-linear)
+x^(2^2)                            4  EXACT        Frobenius (GF(2)-linear)
+x^(2^3)                            8  EXACT        Frobenius (GF(2)-linear)
+AES S-box                        254  OUT OF REACH degree 254 > ceiling 127
+
+  The univariate GF(2^8) view makes the S-box degree 254 (its inverse x^254),
+  beyond the disjoint-grid ceiling — see §3 for the honest bit-level view.
+
+── 3. GF(2) bit-level: exact TT-rank of the truth tensor ──
+
+map                             degree  tt-rank                      tt_B   full_B   ratio  roundtrip
+AES S-box (8→8)                      7  [2,4,8,16,8,4,2]             5312     2048  259.4%  exact
+MixColumns xtime ·2 (8→8)            1  [2,2,2,2,2,2,2]               218     2048   10.6%  exact
+parity x0⊕…⊕x7                       1  [2,2,2,2,2,2,2]                56      256   21.9%  exact
+AND-chain x0·…·x7                    8  [1,1,1,1,1,1,1]                16      256    6.2%  exact
+
+  TT storage is the REAL exact TT train (bit-for-bit roundtripped). The S-box
+  has FULL TT-rank (diffusion across all 8 bits) → larger than the table; the
+  linear layer and calibration maps are low-rank → compress. The obstruction
+  is tensor-train RANK, not polynomial degree.
