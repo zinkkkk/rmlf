@@ -270,13 +270,3 @@ Papers:
    — the cross-method benchmark suite rmlf's example catalog is measured against.
 
 If you use rmlf in academic work, please cite the papers above.
-
-## License
-
-TBD.
-
-[`alg1`]: https://docs.rs/rmlf/latest/rmlf/fn.alg1.html
-[`alg2`]: https://docs.rs/rmlf/latest/rmlf/fn.alg2.html
-[`alg3`]: https://docs.rs/rmlf/latest/rmlf/fn.alg3.html
-[`decouple_opt`]: https://docs.rs/rmlf/latest/rmlf/fn.decouple_opt.html
-[`AxisSampling`]: https://docs.rs/rmlf/latest/rmlf/enum.AxisSampling.html
