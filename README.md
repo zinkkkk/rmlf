@@ -249,8 +249,7 @@ This crate is a Rust port of, and builds directly on, the multivariate Loewner
 Framework developed by **A. C. Antoulas** (Rice University), **I. V. Gosea** (Max
 Planck Institute for Dynamics of Complex Technical Systems, Magdeburg), and
 **C. Poussot-Vassal** (ONERA, Toulouse). All credit for the underlying method is
-theirs; this project provides an independent Rust implementation with permission
-and encouragement from the authors.
+theirs; this project provides an independent Rust implementation.
 
 The original MATLAB reference package: **[`cpoussot/mLF`](https://github.com/cpoussot/mLF)**
 (C. Poussot-Vassal). rmlf's algorithms are validated against it.
